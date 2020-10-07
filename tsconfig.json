@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "esnext",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "outDir": "./lib",
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": false,
+        "preserveConstEnums": true,
+        "allowJs": false,
+        "sourceMap": false,
+        "noImplicitReturns": true,
+        "noUnusedParameters": true,
+        "skipLibCheck": true,
+        "strictFunctionTypes": true,
+        "alwaysStrict": true,
+        "resolveJsonModule": true,
+        "lib": ["es2017", "dom"],
+        "declaration": true,
+        "strict": true
+    },
+    "types": ["react", "react-native"],
+    "include": ["src", "src/index.ts"],
+    "exclude": ["android", "ios", "build", "node_modules", "tests"]
+}
