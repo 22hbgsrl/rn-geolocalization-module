@@ -1,4 +1,4 @@
-import Geolocation, { AuthorizationLevel, GeoCoordinates, GeoOptions, GeoWatchOptions } from 'react-native-geolocation-service'
+import Geolocation, { AuthorizationLevel, GeoCoordinates, GeoOptions, GeoWatchOptions, PositionError } from 'react-native-geolocation-service'
 import { hasLocationPermission } from './utils'
 
 /**
@@ -7,8 +7,8 @@ import { hasLocationPermission } from './utils'
  * @param iosAuthorizationLevel Authorization level to request on iOS to user
  */
 const getPosition: (options: GeoOptions, iosAuthorizationLevel: AuthorizationLevel) => Promise<GeoCoordinates> = (options, iosAuthorizationLevel) =>
-    new Promise((resolve, reject) => {
-        const canGetGeolocalization = hasLocationPermission(Boolean(options.enableHighAccuracy), iosAuthorizationLevel)
+    new Promise(async (resolve, reject) => {
+        const canGetGeolocalization = await hasLocationPermission(Boolean(options.enableHighAccuracy), iosAuthorizationLevel)
         if (canGetGeolocalization) {
             Geolocation.getCurrentPosition(
                 async (position) => {
@@ -19,6 +19,11 @@ const getPosition: (options: GeoOptions, iosAuthorizationLevel: AuthorizationLev
                 },
                 options
             )
+        } else {
+            reject({
+                code: PositionError.PERMISSION_DENIED,
+                message: "User didn't accept permissions."
+            })
         }
     })
 
@@ -28,8 +33,8 @@ const getPosition: (options: GeoOptions, iosAuthorizationLevel: AuthorizationLev
  * @param iosAuthorizationLevel Authorization level to request on iOS to user
  */
 const watchPosition: (options: GeoWatchOptions, iosAuthorizationLevel: AuthorizationLevel) => Promise<GeoCoordinates> = (options, iosAuthorizationLevel) =>
-    new Promise((resolve, reject) => {
-        const canGetGeolocalization = hasLocationPermission(Boolean(options.enableHighAccuracy), iosAuthorizationLevel)
+    new Promise(async (resolve, reject) => {
+        const canGetGeolocalization = await hasLocationPermission(Boolean(options.enableHighAccuracy), iosAuthorizationLevel)
         if (canGetGeolocalization) {
             Geolocation.watchPosition(
                 async (position) => {
@@ -40,6 +45,11 @@ const watchPosition: (options: GeoWatchOptions, iosAuthorizationLevel: Authoriza
                 },
                 options
             )
+        } else {
+            reject({
+                code: PositionError.PERMISSION_DENIED,
+                message: "User didn't accept permissions."
+            })
         }
     })
 

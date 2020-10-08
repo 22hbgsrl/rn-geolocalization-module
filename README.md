@@ -2,6 +2,8 @@
 
 React Native module with geolocalization
 
+Dependecy used: [React Native Geolocalization Service](https://github.com/Agontuk/react-native-geolocation-service)
+
 ## Installation
 
 ```sh
@@ -45,6 +47,10 @@ export default App = () => {
         } catch (e) {
             console.log('error')
         }
+    }
+
+    if (!position) {
+        return null
     }
 
     return <Text>{`Lat. ${coords.latitude} Lng. ${coords.longitude}`}</Text>

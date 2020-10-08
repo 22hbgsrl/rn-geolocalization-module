@@ -1,6 +1,6 @@
 {
   "name": "@22hbg/rn-geolocalization-module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "22HBG React Native geolocalization module",
   "bugs": {
     "url": "https://github.com/22hbgsrl/rn-geolocalization-module/issues"
