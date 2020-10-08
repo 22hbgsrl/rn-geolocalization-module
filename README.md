@@ -1,74 +1,53 @@
-# Firebase library
+# Geolocalization module
 
-Firebase module with firebase core, remote config, analytics, cloud messaging, crashlitics and in-app messaging
+React Native module with geolocalization
 
 ## Installation
 
 ```sh
-yarn add @22hbg/rn-firebase-module @react-native-firebase/analytics @react-native-firebase/app @react-native-firebase/crashlytics @react-native-firebase/in-app-messaging @react-native-firebase/messaging @react-native-firebase/remote-config
+yarn add @22hbg/rn-geolocalization-module react-native-geolocation-service
 
 cd ios/ && pod install
 ```
 
 ### Additional steps:
 
-#### Core
-
-[Android setup](https://rnfirebase.io/#2-android-setup)\
-[iOS setup](https://rnfirebase.io/#3-ios-setup)
-
-#### Crashlitics
-
-[Android setup](https://rnfirebase.io/crashlytics/android-setup)
+[Android setup](https://github.com/Agontuk/react-native-geolocation-service#2-permissions)\
+[iOS setup](https://github.com/Agontuk/react-native-geolocation-service#3-update-infoplist)
 
 ## Usage
 
-### Initialize remote config
+### Get current position
 
 ```javascript
 import React, { useEffect } from 'react'
-import { View } from 'react-native'
-import { initializeRemoteConfig } from '@22hbg/rn-firebase-module'
+import { Text } from 'react-native'
+import { getPosition } from '@22hbg/rn-geolocalization-module'
+import { GeoCoordinates } from 'react-native-geolocation-service'
 
 export default App = () => {
+    const [position, setPosition] = useState<GeoCoordinates>(null)
+
     useEffect(() => {
-        initializeRemoteConfig({
-            data: 'value'
-        })
-        .then(() => console.log('success'))
-            .catch(() => console.error('error: ', error))
+        getInitialPosition()
     })
 
-    return <View />
-}
+    const getInitialPosition = async () => {
+        try {
+            const coords = await getPosition(
+                {
+                    enableHighAccuracy: false
+                },
+                'whenInUse'
+            )
 
-export default App
-```
-
-### Request notification permission
-
-```javascript
-import React, { useEffect } from 'react'
-import { View } from 'react-native'
-import { requestNotificationPermission } from '@22hbg/rn-firebase-module'
-import messaging from '@react-native-firebase/messaging'
-
-export default App = () => {
-    useEffect(() => {
-        checkUserPermission()
-    })
-
-    const checkUserPermission = async () => {
-        const permission = await requestNotificationPermission()
-
-        const enabled = permission === messaging.AuthorizationStatus.AUTHORIZED || permission === messaging.AuthorizationStatus.PROVISIONAL
-
-        if (enabled) {
-            console.log('Authorization status:', permission)
+            setPosition(coords)
+        } catch (e) {
+            console.log('error')
         }
     }
 
-    return <View />
+    return <Text>{`Lat. ${coords.latitude} Lng. ${coords.longitude}`}</Text>
 }
 
 export default App

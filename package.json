@@ -26,12 +26,14 @@
   "author": "Nico Montanari",
   "license": "MIT",
   "peerDependecies": {
-    
+    "react-native-geolocation-service": "*"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
     "eslint": "^7.10.0",
     "prettier": "^2.1.2",
+    "react-native": "^0.63.3",
+    "react-native-geolocation-service": "^5.0.0",
     "typescript": "^4.0.3"
   }
 }
